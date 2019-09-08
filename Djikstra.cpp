@@ -8,6 +8,14 @@
 
 using namespace std;
 
+int read(){
+	int ng=0,x=0;
+	char ch=getchar();
+	for(;ch<'0' || ch>'9';ch=getchar()) ng|=ch=='-';
+	for(;ch>='0' && ch<='9';ch=getchar()) x=(x<<3)+(x<<1)+ch-'0';
+	return ng?-x:x;
+}
+
 struct edge
 {
 	int v,next,to;
@@ -59,11 +67,11 @@ void djikstra(int x){
 }
 
 int main(){
-	scanf("%d %d %d", &n, &m, &p);
+	n=read();m=read();p=read();
 	for(int i=1;i<=n;i++)
 		head[i]=0;
 	for(int i=1;i<=m;i++){
-		scanf("%d %d %d", &f, &g, &w);
+		f=read();g=read();w=read();
 		add(f,g,w);
 	}
 	djikstra(p);

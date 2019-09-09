@@ -26,7 +26,7 @@ int sum(int x){
 
 int main(){
 	scanf("%d %d", &n, &m);
-	_for(i,1,n)
+	_for(i,1,n+1)
 		bit[i]=0;
 	q=0;
 	_for(i,1,n){

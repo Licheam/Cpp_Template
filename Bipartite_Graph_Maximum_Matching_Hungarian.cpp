@@ -31,7 +31,7 @@ bool augment(int x,int stamp){
 
 int match(){
 	int cnt=0;
-	for(int i=1;i<=n1;i++){
+	for(int i=1;i<=n2;i++){
 		mat[i]=0;
 		dfn[i]=0;
 	}

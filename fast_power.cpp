@@ -1,11 +1,11 @@
 #include <cstdio>
 
-#define ll long long
+#define LL long long
 
-ll a,b,n;
+LL a,b,n;
 
-ll binpow(ll x,ll y,ll m){
-	ll r=1%m;
+LL binpow(LL x,LL y,LL m){
+	LL r=1%m;
 	while(y){
 		if(y&1)
 			r=r*x%m;

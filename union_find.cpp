@@ -1,6 +1,4 @@
 #include <cstdio>
-
-#define ll long long
 #define maxn 10005
 
 int n,m,a,b,c,fa[maxn];

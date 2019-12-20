@@ -41,7 +41,6 @@ void spfa(int x){
 					Q.push(e[q].to);
 			}
 		}
-
 	}
 }
 

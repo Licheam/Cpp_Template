@@ -1,6 +1,7 @@
 #include <cstdio>
-#include <queue>
+#include <cstring>
 #include <climits>
+#include <set>
 
 #define LL long long
 #define MAXN 100005
@@ -8,20 +9,11 @@
 
 using namespace std;
 
-int read(){
-	int ng=0,x=0;
-	char ch=getchar();
-	for(;ch<'0' || ch>'9';ch=getchar()) ng|=ch=='-';
-	for(;ch>='0' && ch<='9';ch=getchar()) x=(x<<3)+(x<<1)+ch-'0';
-	return ng?-x:x;
-}
-
-struct edge
-{
+struct edge{
 	int v,next,to;
 }e[MAXM];
 
-int n,m,p,f,g,w,tot=0,dist[MAXN],head[MAXN],flag[MAXN];//flag:是否visit
+int n,m,p,tot=0,dist[MAXN],head[MAXN];
 
 void add(int x, int y, int z){
 	tot++;
@@ -31,47 +23,50 @@ void add(int x, int y, int z){
 	head[x]=tot;
 }
 
-
-struct HeapNode
-{
+struct node{
 	int v,u;
-	bool operator< (const HeapNode& a) const{
-		return v > a.v;
+	bool operator<(const node a)const{
+		if(v!=a.v)
+			return v<a.v;
+		else
+			return u<a.u;
 	}
+	node(int x,int y):v(x),u(y){}
 };
 
-priority_queue<HeapNode> Q;//small root
+set<node> s;//v,u
+set<node>::iterator ite;
 int u,q;
 LL tem;
 
 void djikstra(int x){
 	for(int i=1;i<=n;i++){
 		dist[i]=INT_MAX;
-		flag[i]=0;
 	}
 	dist[x]=0;
-	Q.push((HeapNode){0,x});
-	while(!Q.empty()){
-		u=Q.top().u;
-		Q.pop();
-		if(flag[u])
-			continue;
-		flag[u]=1;
+	s.insert(node(0,x));
+	while(!s.empty()){
+		ite=s.begin();
+		u=ite->u;
+		s.erase(ite);
 		for(int q=head[u];q;q=e[q].next){
-			if(dist[u]+e[q].v<=dist[e[q].to]){
-				dist[e[q].to]=dist[u]+e[q].v;
-				Q.push((HeapNode){dist[e[q].to],e[q].to});
+			int v=e[q].to,w=e[q].v;
+			if(dist[u]+w<dist[v]){
+				ite=s.find(node(dist[v],v));
+				if(ite!=s.end()) s.erase(ite);
+				dist[v]=dist[u]+w;
+				s.insert(node(dist[v],v));
 			}
 		}
 	}
 }
 
 int main(){
-	n=read();m=read();p=read();
-	for(int i=1;i<=n;i++)
-		head[i]=0;
+	scanf("%d %d %d", &n, &m ,&p);
+	memset(head+1,0,sizeof(head[0])*n);
 	for(int i=1;i<=m;i++){
-		f=read();g=read();w=read();
+		int f,g,w;
+		scanf("%d %d %d", &f, &g, &w);
 		add(f,g,w);
 	}
 	djikstra(p);

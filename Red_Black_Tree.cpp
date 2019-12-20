@@ -35,6 +35,7 @@ public:
     iterator lower_bound(T);
     iterator upper_bound(T);
     void erase(T);
+    bool empty();
 
 };
 
@@ -224,6 +225,11 @@ redblacktree<T>::iterator redblacktree<T>::begin() {
         cur=cur->le;
     }
     return iterator(tem);
+}
+
+template<typename T>
+bool redblacktree<T>::empty() {
+    return _root==NULL;
 }
 
 //TODO: 实现end-- 并移除rend

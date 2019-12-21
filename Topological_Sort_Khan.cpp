@@ -23,7 +23,7 @@ void add(int x,int y){
 void khan(){
     stack<int> s;
     int cnt=0;
-    memset(flag,0,n*sizeof(flag[0]));
+    memset(flag+1,0,n*sizeof(flag[0]));
     for(int i=1;i<=n;i++){
         if(!flag[i] && indgr[i]==0){
             s.push(i);

@@ -23,23 +23,23 @@ void add(int x,int y,int z){
     head[x]=tot;
 }
 
-bool label_vertex(){//反向BFS
+bool label_vertex(){//BFS
     memset(lbl+1,0,n*sizeof(lbl[0]));
     queue<int> q;
-    lbl[t]=1;
-    q.push(t);
+    lbl[s]=1;
+    q.push(s);
     while(!q.empty()){
         int u=q.front();q.pop();
         for(int p=head[u];p;p=e[p].next){
             int v=e[p].to;
-            if(e[p^1].cf && !lbl[v]){//只搜反向边
+            if(e[p].cf && !lbl[v]){
                 lbl[v]=lbl[u]+1;
                 q.push(v);
-                if(v==s) return true;
+                if(v==t) return true;
             }
         }
     }
-    return lbl[s]!=0;
+    return false;
 }
 
 int multi_augment(int u,int lim){//DFS 多路增广
@@ -48,7 +48,7 @@ int multi_augment(int u,int lim){//DFS 多路增广
     int used=0;
     for(int& p=cur[u];p;p=e[p].next){
         int v=e[p].to;
-        if(e[p].cf && lbl[v]==lbl[u]-1){
+        if(e[p].cf && lbl[v]==lbl[u]+1){
             int rest=multi_augment(v,min(lim-used,e[p].cf));
             used+=rest;
             e[p].cf-=rest;

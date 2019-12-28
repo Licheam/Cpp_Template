@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const int inf = 1e9;
+const int inf = 0x3f3f3f3f;
 
 int n,m,s,t,tot,head[MAXN],lbl[MAXN],cur[MAXN];
 

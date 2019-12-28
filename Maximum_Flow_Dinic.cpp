@@ -5,11 +5,11 @@
 #define MAXN 10005
 #define MAXM 100005
 
-using namespace std;
-
 const int inf = 0x3f3f3f3f;
 
-int n,m,s,t,tot,head[MAXN],lbl[MAXN],cur[MAXN];
+using namespace std;
+
+int n,m,s,t,tot,head[MAXN],lb[MAXN],cur[MAXN];
 
 struct edge{//残量网络 residual network
     int to,cf,next;//Cf:residual capacity
@@ -24,16 +24,16 @@ void add(int x,int y,int z){
 }
 
 bool label_vertex(){//BFS
-    memset(lbl+1,0,n*sizeof(lbl[0]));
+    memset(lb+1,0,n*sizeof(lb[0]));
     queue<int> q;
-    lbl[s]=1;
+    lb[s]=1;
     q.push(s);
     while(!q.empty()){
         int u=q.front();q.pop();
         for(int p=head[u];p;p=e[p].next){
             int v=e[p].to;
-            if(e[p].cf && !lbl[v]){
-                lbl[v]=lbl[u]+1;
+            if(e[p].cf && !lb[v]){
+                lb[v]=lb[u]+1;
                 q.push(v);
                 if(v==t) return true;
             }
@@ -43,12 +43,12 @@ bool label_vertex(){//BFS
 }
 
 int multi_augment(int u,int lim){//DFS 多路增广
-    if(u == t) return lim;//走完了
+    if(u == t) return lim;
     
     int used=0;
     for(int& p=cur[u];p;p=e[p].next){
         int v=e[p].to;
-        if(e[p].cf && lbl[v]==lbl[u]+1){
+        if(e[p].cf && lb[v]==lb[u]+1){
             int rest=multi_augment(v,min(lim-used,e[p].cf));
             used+=rest;
             e[p].cf-=rest;

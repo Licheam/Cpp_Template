@@ -4,9 +4,9 @@
 #define MAXN 2005
 #define MAXM 1000005
 
-using namespace std;
-
 const int inf=0x3f3f3f3f;
+
+using namespace std;
 
 int n1,n2,n,m,tot,head[MAXN];
 int mat[MAXN],lb[MAXN],dfn[MAXN];

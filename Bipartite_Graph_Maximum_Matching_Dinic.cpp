@@ -1,19 +1,19 @@
 #include <cstdio>
 #include <cstring>
 #include <queue>
-#define MAXN 1005
+#define MAXN 2005
 #define MAXM 1000005
 
 using namespace std;
 
-const int inf=1e9;
+const int inf=0x3f3f3f3f;
 
 struct edge{
     int to,cf,next;
 }e[MAXM<<1];
 
 int n,n1,n2,m,s,t;
-int tot,head[MAXN<<1],cur[MAXN<<1],lbl[MAXN<<1];
+int tot,head[MAXN],cur[MAXN],lbl[MAXN];
 
 void add(int x,int y,int z){
     tot++;

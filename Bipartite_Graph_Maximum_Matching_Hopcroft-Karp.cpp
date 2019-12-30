@@ -83,7 +83,7 @@ int main(){
     scanf("%d %d %d", &n1, &n2, &m);
     n=n1+n2;
     memset(head+1,0,n*sizeof(head[0]));
-    int tot=0;
+    tot=0;
     for(int i=1;i<=m;i++){
         int f,g;
         scanf("%d %d",&f,&g);

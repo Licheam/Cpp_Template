@@ -18,9 +18,9 @@ int find(int x){
 
 int merge(int x,int y){
     if(!x || !y) return x+y;
-    if(lt[x].v>lt[y].v || (lt[x].v==lt[y].v && x>y)) swap(x,y);
+    if(lt[x].v>lt[y].v || (lt[x].v==lt[y].v && x>y)) swap(x,y);//后一个条件蜜汁优化？
     lt[x].rc=merge(lt[x].rc,y);
-    lt[lt[x].lc].rt=lt[lt[x].rc].rt=lt[x].rt=x;
+    lt[lt[x].rc].rt=x;
     if(lt[lt[x].lc].dis<lt[lt[x].rc].dis) swap(lt[x].lc,lt[x].rc);
     lt[x].dis=lt[lt[x].rc].dis+1;
     return x;
@@ -41,6 +41,7 @@ int main(){
         lt[i].lc=lt[i].rc=0;
         lt[i].dis=0;
     }
+    lt[0].dis=0;
     for(int i=1;i<=m;i++){
         int opt;
         scanf("%d",&opt);
@@ -50,7 +51,7 @@ int main(){
             int rx=find(x),ry=find(y);
             if(lt[x].v==-1||lt[y].v==-1||rx==ry)
                 continue;
-            lt[rx].rt=lt[ry].rt=merge(rx,ry);
+            merge(rx,ry);
         }
         else{
             int x;

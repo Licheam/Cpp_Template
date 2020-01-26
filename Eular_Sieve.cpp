@@ -1,23 +1,20 @@
 #include <cstdio>
+#include <cstring>
 
 #define MAXN 10000005
-#define MAXP 700000
+#define MAXP 700005
 
-#define _for(i,a,b) for(int i=(a);i<=(b);i++)
-
-int n,m,num,cnt=0,prime[MAXP],ispri[MAXN];
+int n,m,num,cnt,prime[MAXP],npri[MAXN];
 
 void eular_sieve(){
-	ispri[0]=ispri[1]=0;
-	_for(i,2,n)
-		ispri[i]=1;
-	_for(i,2,n){
-		if(ispri[i])
-			prime[++cnt]=i;
-		for(int j=1,t=i*prime[1]; j<=cnt&&t<=n; t=i*prime[++j]){
-			ispri[t]=0;
-			if(!(i%prime[j]))
-				break;
+	cnt=0;
+	memset(npri,0,(n+1)*sizeof(npri[0]));
+	npri[0]=npri[1]=1;
+	for(int i=2;i<=n;i++){
+		if(!npri[i]) prime[++cnt]=i;
+		for(int j=1;j<=cnt && i*prime[j]<=n;j++){
+			npri[i*prime[j]]=1;
+			if(!(i%prime[j])) break;
 		}
 	}
 }
@@ -25,8 +22,8 @@ void eular_sieve(){
 int main(){
 	scanf("%d %d", &n, &m);
 	eular_sieve();
-	_for(i,1,m){
+	for(int i=1;i<=m;i++){
 		scanf("%d",&num);
-		puts(ispri[num]?"Yes":"No");
+		puts(npri[num]?"No":"Yes");
 	}
 }

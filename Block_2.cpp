@@ -56,13 +56,13 @@ int query(int l,int r,int x){
 
 int main(){
     scanf("%d", &n);blo=sqrt(n);
-    memset(atag+1,0,blo*sizeof(atag[0]));
     for(int i=1;i<=n;i++)
         scanf("%d", &v[i]);
     for(int i=1;i<=n;i++){
         bl[i]=(i-1)/blo+1;
         ve[bl[i]].push_back(v[i]);
     }
+    memset(atag+1,0,bl[n]*sizeof(atag[0]));
     for(int i=1;i<=bl[n];i++)
         sort(ve[i].begin(),ve[i].end());
 

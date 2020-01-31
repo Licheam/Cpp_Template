@@ -1,22 +1,36 @@
 #include <cstdio>
+#include <cmath>
+#define LL long long
 
-int exgcd(int a,int b,int& x,int& y){
-	if(b==0){
-		x=1,y=0;
-		return a;
+LL exgcd(LL a,LL b,LL &x,LL &y){
+	if(!b || !a){
+		x=(a!=0);y=(b!=0);
+		return a+b;
 	}
-	int g=exgcd(b,a%b,x,y);
-	int t=x;
-	x=y;
-	y=t-(a/b)*y;
+	LL g=exgcd(b,a%b,y,x);
+	y=y-(a/b)*x;
 	return g;
 }
 
 int main(){
-	int a,b,x,y;
-	scanf("%d %d",&a,&b);
-	int g=exgcd(a,b,x,y);
-	g=b/g;
-	printf("%d\n", (x%g+g)%g);
+	int T;
+	scanf("%d", &T);
+	while(T--){
+		LL a,b,c,x,y,g;
+		scanf("%lld %lld %lld", &a, &b, &c);
+		g=exgcd(a,b,x,y);
+		if(c%g){
+			printf("-1\n");
+			continue;
+		}
+		a/=g;b/=g;c/=g;x*=c;y*=c;
+		LL kl=ceil((double)(-x+1)/b),kr=floor((double)(y-1)/a);
+		if(kr<kl){
+			printf("%lld %lld\n",(x+kl*b),(y-kr*a));
+		}
+		else{
+			printf("%lld %lld %lld %lld %lld\n",kr-kl+1,(x+kl*b),(y-kr*a),(x+kr*b),(y-kl*a));
+		}
+	}
 	return 0;
 }

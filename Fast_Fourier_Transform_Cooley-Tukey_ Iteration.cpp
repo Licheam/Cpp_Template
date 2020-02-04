@@ -1,14 +1,14 @@
 #include <cstdio>
 #include <algorithm>
 #include <complex>
-#define MAXN 4000005
+#define MAXN 2100005
 
 using namespace std;
 
-complex<double> omg[MAXN],iomg[MAXN],temp[MAXN];
+const double PI=acos(-1);
+complex<double> omg[MAXN],iomg[MAXN];
 
 void init(int n){
-	double PI=acos(-1);
 	for(int i=0;i<n;i++){
 		omg[i]=polar(1.0,2.0*PI*i/n);
 		iomg[i]=conj(omg[i]);
@@ -21,11 +21,12 @@ void FFT(int n,complex<double>* P,complex<double>* w){
 		for(int l=n>>1;(j^=l)<l;l>>=1);
 	}
 	
-	for(int i=2;i<=n;i<<=1){
-		int l=i>>1;
+	for(int i=2,l;i<=n;i<<=1){
+		l=i>>1;
+		complex<double> t;
 		for(int j=0;j<n;j+=i){
 			for(int k=0;k<l;k++){
-				complex<double> t=P[j+l+k]*w[n/i*k];
+				t=P[j+l+k]*w[n/i*k];
 				P[j+l+k]=P[j+k]-t;
 				P[j+k]=P[j+k]+t;
 			}

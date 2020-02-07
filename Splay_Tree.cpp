@@ -8,6 +8,8 @@ struct node{
 	int v,fa,ch[2],size,cnt;
 }sp[MAXN];
 
+int getch(int x) {return sp[sp[x].fa].ch[1]==x;}
+
 void pushup(int x){
 	sp[x].size=sp[x].cnt;
 	if(sp[x].ch[0]) sp[x].size+=sp[sp[x].ch[0]].size;
@@ -24,17 +26,11 @@ void rotate(int x){
 }
 
 void splay(int x,int goal=0){
-	while(sp[x].fa!=goal){
-		int f=sp[x].fa;
-		int ff=sp[f].fa;
-		if(ff!=goal){
-			if((sp[f].ch[0]==x)==(sp[ff].ch[0]==f)) rotate(f);
-			else rotate(x);
-		}
-		rotate(x);
+	for(int f;(f=sp[x].fa)!=goal;rotate(x)){
+		if(sp[f].fa!=goal)
+			rotate(getch(x)==getch(f)?f:x);
 	}
-	if(!goal)
-		root=x;
+	if(!goal) root=x;
 }
 
 void insert(int x){

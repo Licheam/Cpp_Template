@@ -9,12 +9,7 @@ struct node{
 }sp[MAXN];
 
 int getch(int x) {return sp[sp[x].fa].ch[1]==x;}
-
-void pushup(int x){
-	sp[x].size=sp[x].cnt;
-	if(sp[x].ch[0]) sp[x].size+=sp[sp[x].ch[0]].size;
-	if(sp[x].ch[1]) sp[x].size+=sp[sp[x].ch[1]].size;
-}
+void pushup(int x) {sp[x].size=sp[x].cnt+sp[sp[x].ch[0]].size+sp[sp[x].ch[1]].size;}
 
 void rotate(int x){
 	int f=sp[x].fa, ff=sp[f].fa;
@@ -118,6 +113,7 @@ int main(){
 	scanf("%d", &n);
 	root=0;len=0;
 	insert(-inf);insert(inf);
+	sp[0].size=0;
 	for(int i=1;i<=n;i++){
 		int opt,x;
 		scanf("%d %d", &opt, &x);

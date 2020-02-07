@@ -9,16 +9,17 @@ struct node{
 }sp[MAXN];
 
 void pushup(int x){
-	sp[x].size=sp[sp[x].ch[0]].size+sp[sp[x].ch[1]].size+sp[x].cnt;
+	sp[x].size=sp[x].cnt;
+	if(sp[x].ch[0]) sp[x].size+=sp[sp[x].ch[0]].size;
+	if(sp[x].ch[1]) sp[x].size+=sp[sp[x].ch[1]].size;
 }
 
 void rotate(int x){
-	int f=sp[x].fa;
-	int ff=sp[f].fa;
-	int t=(sp[f].ch[1]==x);
+	int f=sp[x].fa, ff=sp[f].fa;
+	int k=(sp[f].ch[1]==x);
 	sp[ff].ch[(sp[ff].ch[1]==f)]=x; sp[x].fa=ff;
-	sp[sp[x].ch[t^1]].fa=f; sp[f].ch[t]=sp[x].ch[t^1];
-	sp[x].ch[t^1]=f; sp[f].fa=x;
+	sp[sp[x].ch[k^1]].fa=f; sp[f].ch[k]=sp[x].ch[k^1];
+	sp[x].ch[k^1]=f; sp[f].fa=x;
 	pushup(f); pushup(x);
 }
 

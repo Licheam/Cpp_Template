@@ -1,5 +1,6 @@
 #include <cstdio>
 #define MAXN 100005
+const int inf=0x3f3f3f3f;
 
 int root,len;
 
@@ -15,12 +16,8 @@ void rotate(int x){
 	int f=sp[x].fa;
 	int ff=sp[f].fa;
 	int t=(sp[f].ch[1]==x);
-	if(ff) sp[ff].ch[(sp[ff].ch[1]==f)]=x;
-	sp[x].fa=ff;
-
-	if(sp[x].ch[t^1]) sp[sp[x].ch[t^1]].fa=f;
-	sp[f].ch[t]=sp[x].ch[t^1];
-
+	sp[ff].ch[(sp[ff].ch[1]==f)]=x; sp[x].fa=ff;
+	sp[sp[x].ch[t^1]].fa=f; sp[f].ch[t]=sp[x].ch[t^1];
 	sp[x].ch[t^1]=f; sp[f].fa=x;
 	pushup(f); pushup(x);
 }
@@ -49,7 +46,7 @@ void insert(int x){
 		sp[cur].cnt++;
 	else{
 		cur=++len;
-		if(f) sp[f].ch[x>sp[f].v]=cur;
+		sp[f].ch[x>sp[f].v]=cur;
 		sp[cur].ch[0]=sp[cur].ch[1]=0;
 		sp[cur].fa=f;
 		sp[cur].v=x;
@@ -59,7 +56,6 @@ void insert(int x){
 }
 
 void find(int x){
-	if(!root) return;
 	int cur=root;
 	while(x!=sp[cur].v && sp[cur].ch[x>sp[cur].v])
 		cur=sp[cur].ch[x>sp[cur].v];
@@ -67,7 +63,7 @@ void find(int x){
 }
 
 int kth(int x){
-	if(!root || sp[root].size<x) return 0;
+	if(sp[root].size<x) return 0;
 	int cur=root;
 	while(1){
 		if(x<=sp[sp[cur].ch[0]].size)
@@ -100,31 +96,21 @@ int succ(int x){
 
 void erase(int x){
 	int last=pre(x),next=succ(x),del;
-	if(!last||!next){
-		del=root;
-	}
-	else{
-		splay(last);splay(next,last);
-		del=sp[next].ch[0];
-	}
-
+	splay(last);splay(next,last);
+	del=sp[next].ch[0];
 	if(sp[del].cnt>1){
 		sp[del].cnt--;
 		splay(del);
 	}
 	else{
-		if(del==root){
-			root=sp[del].ch[(sp[del].ch[0]==0)];
-			sp[sp[del].ch[(sp[del].ch[0]==0)]].fa=0;
-		}
-		else sp[next].ch[0]=0;
-
-		// sp[del]=sp[len];
-		// int f=sp[del].fa;
-		// if(f) sp[f].ch[(sp[f].ch[1]==len)]=del;
-		// if(sp[del].ch[0]) sp[sp[del].ch[0]].fa=del;
-		// if(sp[del].ch[1]) sp[sp[del].ch[1]].fa=del;
-		// len--;
+		sp[next].ch[0]=0;
+		sp[del].fa=0;
+		sp[del]=sp[len];
+		int f=sp[del].fa;
+		sp[f].ch[(sp[f].ch[1]==len)]=del;
+		sp[sp[del].ch[0]].fa=del;
+		sp[sp[del].ch[1]].fa=del;
+		len--;
 
 	}
 }
@@ -134,8 +120,7 @@ int n;
 int main(){
 	scanf("%d", &n);
 	root=0;len=0;
-	sp[0].fa=sp[0].ch[0]=sp[0].ch[1]=0;
-	sp[0].cnt=sp[0].size=0;
+	insert(-inf);insert(inf);
 	for(int i=1;i<=n;i++){
 		int opt,x;
 		scanf("%d %d", &opt, &x);
@@ -147,10 +132,10 @@ int main(){
 		}
 		else if(opt==3){
 			find(x);
-			printf("%d\n", sp[sp[root].ch[0]].size+1);
+			printf("%d\n", sp[sp[root].ch[0]].size);
 		}
 		else if(opt==4){
-			printf("%d\n", kth(x));
+			printf("%d\n", kth(x+1));
 		}
 		else if(opt==5){
 			printf("%d\n", sp[pre(x)].v);

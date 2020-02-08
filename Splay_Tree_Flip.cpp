@@ -15,7 +15,7 @@ int getch(int x) {return sp[sp[x].fa].ch[1]==x;}
 void pushup(int x) {sp[x].size=sp[x].cnt+sp[sp[x].ch[0]].size+sp[sp[x].ch[1]].size;}
 
 void pushdown(int x){
-	if(x&&sp[x].tag){
+	if(sp[x].tag){
 		sp[sp[x].ch[0]].tag^=1;
 		sp[sp[x].ch[1]].tag^=1;
 		swap(sp[x].ch[0],sp[x].ch[1]);

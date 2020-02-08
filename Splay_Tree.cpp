@@ -102,6 +102,7 @@ void erase(int x){
 		sp[f].ch[(sp[f].ch[1]==len)]=del;
 		sp[sp[del].ch[0]].fa=del;
 		sp[sp[del].ch[1]].fa=del;
+		if(root==len) root=del;
 		len--;
 
 	}

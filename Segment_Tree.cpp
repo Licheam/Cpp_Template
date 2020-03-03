@@ -1,7 +1,9 @@
 #include <cstdio>
+#include <algorithm>
 #define LL long long
 #define MAXN 100005
 #define MAXT MAXN<<2
+using namespace std;
 
 struct node{
 	int le,ri;
@@ -48,6 +50,7 @@ void plus(int cur,int l,int r,LL delta){
 			plus(le,l,r,delta);
 		if(mid<r)
 			plus(ri,l,r,delta);
+		// sgt[cur].sum=sgt[cur].tag*(sgt[cur].ri-sgt[cur].le)+sgt[le].sum+sgt[ri].sum;
 		sgt[cur].sum=sgt[le].sum+sgt[ri].sum;
 	}
 }
@@ -57,13 +60,13 @@ LL query(int cur,int l,int r){
 		return sgt[cur].sum;
 	else{
 		int le=cur<<1,ri=le+1,mid=(sgt[cur].le+sgt[cur].ri)>>1;
-		if(sgt[cur].tag)
-			update(cur);
+		if(sgt[cur].tag) update(cur);
 		LL sum=0;
 		if(l<mid)
 			sum+=query(le,l,r);
 		if(mid<r)
 			sum+=query(ri,l,r);
+		// sum+=sgt[cur].tag*(min(r,sgt[cur].ri)-max(l,sgt[cur].le));
 		return sum;
 	}
 }

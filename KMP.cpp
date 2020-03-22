@@ -12,9 +12,10 @@ void kmp(){
 			k=next[k];
 		next[i]=++k;
 	}
+
 	cnt=0;
 	for(int i=1,k=0;i<=n;i++){
-		while(k!=-1 && s2[k]!=s1[i-1])
+		while(~k && s2[k]!=s1[i-1])
 			k=next[k];
 		if(m==++k){
 			cnt++;

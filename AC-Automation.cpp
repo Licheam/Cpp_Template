@@ -12,8 +12,8 @@ struct trie{
 int tot;
 
 void insert(char *s){
-	int len=strlen(s), cur=0;
-	for(int i=0;i<len;i++){
+	int len=strlen(s+1), cur=0;
+	for(int i=1;i<=len;i++){
 		int& to=tt[cur].ch[s[i]-'a'];
 		if(!to){
 			to=++tot;
@@ -45,12 +45,13 @@ void getfail(){
 }
 
 int query(char *s){
-	int len=strlen(s),ans=0;
-	for(int i=0,k=0;i<len;i++){
+	int len=strlen(s+1),ans=0;
+	for(int i=1,k=0;i<=len;i++){
 		while(k && !tt[k].ch[s[i]-'a'])
 			k=tt[k].fail;
 		k=tt[k].ch[s[i]-'a'];
 		ans+=tt[k].mark;
+
 		tt[k].mark=0;
 	}
 	return ans;
@@ -64,10 +65,10 @@ int main(){
 	tot=0;
 	memset(tt,0,sizeof(tt));
 	for(int i=1;i<=n;i++){
-		scanf("%s", s);
+		scanf("%s", s+1);
 		insert(s);
 	}
-	scanf("%s", s);
+	scanf("%s", s+1);
 	getfail();
 	printf("%d\n", query(s));
 	return 0;

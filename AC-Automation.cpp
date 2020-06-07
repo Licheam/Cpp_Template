@@ -14,12 +14,12 @@ int tot;
 void insert(char *s){
 	int len=strlen(s+1), cur=0;
 	for(int i=1;i<=len;i++){
-		int& to=tt[cur].ch[s[i]-'a'];
-		if(!to){
-			to=++tot;
+		int& next=tt[cur].ch[s[i]-'a'];
+		if(!next){
+			next=++tot;
 			tt[tot].mark=0;
 		}
-		cur=to;
+		cur=next;
 	}
 	tt[cur].mark++;
 }
@@ -38,7 +38,7 @@ void getfail(){
 			while(k && !tt[k].ch[i])
 				k=tt[k].fail;
 			tt[tt[u].ch[i]].fail=tt[k].ch[i];
-			// tt[tt[u].ch[i]].mark+=tt[tt[k].ch[i]].mark;
+			// tt[tt[u].ch[i]].mark+=tt[tt[k].ch[i]].mark;//如果需要重复统计，fail累加标记
 			Q.push(tt[u].ch[i]);
 		}
 	}
@@ -52,7 +52,7 @@ int query(char *s){
 		k=tt[k].ch[s[i]-'a'];
 		ans+=tt[k].mark;
 
-		tt[k].mark=0;
+		tt[k].mark=0;//清除该字符串的标记（只求
 	}
 	return ans;
 }

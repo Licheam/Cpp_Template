@@ -17,6 +17,7 @@ void rsort(int n,int m){
 }
 
 void get_sa(char* s){
+	//O(nlogn)
 	int n=strlen(s+1), m=0;
 	for(int i=1;i<=n;i++)
 		m=max(m,rk[i]=s[i]),tp[i]=i;
@@ -33,6 +34,7 @@ void get_sa(char* s){
 	}
 
 	//利用height[i+1]>=height[i]-1
+	//O(n)
 	for(int i=1,k=0;i<=n;i++){
 		if(k) k--;
 		while(rk[i]>1 && s[i+k]==s[sa[rk[i]-1]]+k) k++;

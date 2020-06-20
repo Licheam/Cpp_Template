@@ -12,7 +12,7 @@ struct edge{
 	int v,to,next;
 }e[MAXM];
 
-int n,m,p,tot=0,head[MAXN],dist[MAXN],flag[MAXN];
+int n,m,p,tot,head[MAXN],dist[MAXN],flag[MAXN];
 
 void add(int x,int y,int z){
 	tot++;
@@ -46,6 +46,7 @@ void spfa(int x){
 
 int main(){
 	scanf("%d %d %d",&n,&m,&p);
+	tot=0;
 	memset(head+1,0,n*sizeof(head[0]));
 	for(int i=1;i<=m;i++){
 		int f,g,w;

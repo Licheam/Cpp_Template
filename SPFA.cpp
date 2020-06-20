@@ -12,7 +12,8 @@ struct edge{
 	int v,to,next;
 }e[MAXM];
 
-int n,m,p,tot,head[MAXN],dist[MAXN],flag[MAXN];
+int n,m,p,tot,head[MAXN],dist[MAXN];
+bool flag[MAXN];
 
 void add(int x,int y,int z){
 	tot++;
@@ -28,7 +29,7 @@ void spfa(int x){
 	memset(flag+1,0,n*sizeof(flag[0]));
 
 	Q.push(x);
-	flag[x]=1;
+	flag[x]=true;
 	dist[x]=0;
 	while(!Q.empty()){
 		int u=Q.front();
@@ -38,7 +39,10 @@ void spfa(int x){
 			int v=e[q].to;
 			if(dist[u]+e[q].v<dist[v]){
 				dist[v]=dist[u]+e[q].v;
-				if(!flag[v]) Q.push(v);
+				if(!flag[v]){
+					Q.push(v);
+					flag[v]=true;
+				}
 			}
 		}
 	}

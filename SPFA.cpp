@@ -1,21 +1,22 @@
 #include <cstdio>
-#include <climits>
+#include <cstring>
 #include <queue>
 
 #define MAXN 100005
 #define MAXM 500005
+const int inf=0x3f3f3f3f;
 
 using namespace std;
 
-struct edge
-{
+struct edge{
 	int v,to,next;
 }e[MAXM];
 
-int n,m,p,f,g,w,tot=0,head[MAXN],dist[MAXN],flag[MAXN];
+int n,m,p,tot=0,head[MAXN],dist[MAXN],flag[MAXN];
 
 void add(int x,int y,int z){
-	e[++tot].v=z;
+	tot++;
+	e[tot].v=z;
 	e[tot].to=y;
 	e[tot].next=head[x];
 	head[x]=tot;
@@ -23,22 +24,21 @@ void add(int x,int y,int z){
 
 void spfa(int x){
 	queue <int> Q;
+	memset(dist+1,inf,n*sizeof(dist[0]));
+	memset(flag+1,0,n*sizeof(flag[0]));
 
-	for(int i=1;i<=n;i++){
-		dist[i]=INT_MAX;
-		flag[i]=0;
-	}
 	Q.push(x);
 	flag[x]=1;
 	dist[x]=0;
 	while(!Q.empty()){
 		int u=Q.front();
 		Q.pop();
+		flag[u]=false;
 		for(int q=head[u];q;q=e[q].next){
-			if(dist[u]+e[q].v<dist[e[q].to]){
-				dist[e[q].to]=dist[u]+e[q].v;
-				if(!flag[e[q].to])
-					Q.push(e[q].to);
+			int v=e[q].to;
+			if(dist[u]+e[q].v<dist[v]){
+				dist[v]=dist[u]+e[q].v;
+				if(!flag[v]) Q.push(v);
 			}
 		}
 	}
@@ -46,14 +46,14 @@ void spfa(int x){
 
 int main(){
 	scanf("%d %d %d",&n,&m,&p);
-	for(int i=1;i<=n;i++)
-		head[i]=0;
+	memset(head+1,0,n*sizeof(head[0]));
 	for(int i=1;i<=m;i++){
+		int f,g,w;
 		scanf("%d %d %d", &f, &g, &w);
 		add(f,g,w);
 	}
 	spfa(p);
 	for(int i=1;i<=n;i++)
-		printf("%d ", dist[i]);
+		printf("%d ", dist[i]==inf?2147483647:dist[i]);
 	return 0;
 }

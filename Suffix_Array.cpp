@@ -40,7 +40,7 @@ void get_sa(char* s){
 	//O(n)
 	for(int i=1,k=0;i<=n;i++){
 		if(k) k--;
-		while(rk[i]>1 && s[i+k]==s[sa[rk[i]-1]]+k) k++;
+		while(rk[i]>1 && s[i+k]==s[sa[rk[i]-1]+k]) k++;
 		height[rk[i]]=k;
 	}
 }

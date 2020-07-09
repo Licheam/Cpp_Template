@@ -49,11 +49,12 @@ void sam_extend(int c) {
             } else {
                 clone=++sz;
                 sam[cur].link=clone;
-                sam[clone].cnt=0;
             }
             sam[clone]=sam[q];
             sam[clone].len=sam[p].len+1;
             sam[q].link=clone;
+            if(p==last) sam[clone].cnt=1;
+            else sam[clone].cnt=0;
             for(;~p && sam[p].ch[c]==q;p=sam[p].link)
                 sam[p].ch[c]=clone;
         }

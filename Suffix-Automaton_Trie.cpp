@@ -30,7 +30,6 @@ void sam_extend(int c) {
     int cur=++sz;
     sam[cur].len=sam[last].len+1;
     memset(sam[cur].ch,0,sizeof(sam[cur].ch));
-    sam[cur].cnt=1;
 
     int p=last;
     for(;~p && !sam[p].ch[c];p=sam[p].link)
@@ -50,17 +49,18 @@ void sam_extend(int c) {
                 clone=++sz;
                 sam[cur].link=clone;
             }
+            
             sam[clone]=sam[q];
             sam[clone].len=sam[p].len+1;
             sam[q].link=clone;
-            if(p==last) sam[clone].cnt=1;
-            else sam[clone].cnt=0;
+            sam[clone].cnt=0;
             for(;~p && sam[p].ch[c]==q;p=sam[p].link)
                 sam[p].ch[c]=clone;
         }
     }
 
     last=cur;
+    sam[cur].cnt=1;
 }
 
 char s[MAXN];

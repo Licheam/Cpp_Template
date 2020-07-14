@@ -22,7 +22,7 @@ void get_sa(char* s){
 	for(int i=1;i<=n;i++)
 		m=max(m,rk[i]=s[i]),tp[i]=i;
 	rsort(n,m);
-	for(int k=1,p;p<n;k<<=1,m=p){
+	for(int k=1,p=0;p<n;k<<=1,m=p){
 		p=0;
 		//重制第二关键字
 		for(int i=n-k+1;i<=n;i++) tp[++p]=i; //后续为空，排前面
@@ -32,8 +32,9 @@ void get_sa(char* s){
 	
 		swap(tp,rk);
 		rk[sa[1]]=p=1;
-		for(int i=2;i<=n;i++)
+		for(int i=2;i<=n;i++){
 			rk[sa[i]]=(tp[sa[i]]==tp[sa[i-1]] && tp[sa[i]+k]==tp[sa[i-1]+k])?p:++p;
+		}
 	}
 
 	//利用height[i+1]>=height[i]-1
@@ -48,7 +49,8 @@ void get_sa(char* s){
 int main(){
 	scanf("%s",s+1);
 	get_sa(s);
-	for(int i=1;i<=n;i++)
+	int len=strlen(s+1);
+	for(int i=1;i<=len;i++)
 		printf("%d ", sa[i]);
 	return 0;
 }

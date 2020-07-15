@@ -23,7 +23,6 @@ void sam_extend(int c) {
     int cur=++sz;
     sam[cur].len=sam[last].len+1;
     memset(sam[cur].ch,0,sizeof(sam[cur].ch));
-    sam[cur].cnt=1;
 
     int p=last;
     for(;~p && !sam[p].ch[c];p=sam[p].link)
@@ -47,6 +46,7 @@ void sam_extend(int c) {
     }
     
     last=cur;
+    sam[cur].cnt=1;
 }
 
 struct edge{

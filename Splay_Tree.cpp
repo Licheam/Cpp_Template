@@ -13,8 +13,8 @@ void pushup(int x) {sp[x].size=sp[x].cnt+sp[sp[x].ch[0]].size+sp[sp[x].ch[1]].si
 
 void rotate(int x){
 	int f=sp[x].fa, ff=sp[f].fa;
-	int k=(sp[f].ch[1]==x);
-	sp[ff].ch[(sp[ff].ch[1]==f)]=x; sp[x].fa=ff;
+	int k=getch(x);
+	sp[ff].ch[getch(f)]=x; sp[x].fa=ff;
 	sp[sp[x].ch[k^1]].fa=f; sp[f].ch[k]=sp[x].ch[k^1];
 	sp[x].ch[k^1]=f; sp[f].fa=x;
 	pushup(f); pushup(x);

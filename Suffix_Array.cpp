@@ -6,7 +6,8 @@ using namespace std;
 
 //sa:排名对应的前缀, rk:前缀的排名, tp:第二关键字排名对应的前缀, tax:排名对应的个数
 //height:排名i与i-1后缀的LCP(最长公共前缀)
-int sa[MAXN],rk[MAXN],tp[MAXN],tax[MAXN],height[MAXN];
+int sa[MAXN],r1[MAXN],r2[MAXN],tax[MAXN],height[MAXN];
+int *rk=r1,*tp=r2;
 char s[MAXN];
 
 void rsort(int n,int m){
@@ -37,7 +38,7 @@ void get_sa(char* s){
 		}
 	}
 
-	//利用height[i+1]>=height[i]-1
+	//利用height[rk[i+1]]>=height[rk[i]]-1
 	//O(n)
 	for(int i=1,k=0;i<=n;i++){
 		if(k) k--;

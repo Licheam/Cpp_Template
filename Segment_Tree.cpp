@@ -13,14 +13,14 @@ struct node{
 int n,m;
 LL a[MAXN];
 
-void built(int cur,int l,int r){
+void build(int cur,int l,int r){
 	sgt[cur].le=l;
 	sgt[cur].ri=r;
 	sgt[cur].tag=0;
 	if(l+1<r){
 		int le=cur<<1,ri=le+1;
-		built(le,l,(l+r)>>1);
-		built(ri,(l+r)>>1,r);
+		build(le,l,(l+r)>>1);
+		build(ri,(l+r)>>1,r);
 		sgt[cur].sum=sgt[le].sum+sgt[ri].sum;
 	}
 	else
@@ -37,7 +37,7 @@ void update(int cur){
 
 }
 
-void plus(int cur,int l,int r,LL delta){
+void modify(int cur,int l,int r,LL delta){
 	if(l<=sgt[cur].le && sgt[cur].ri<=r){
 		sgt[cur].sum+=delta*(sgt[cur].ri-sgt[cur].le);
 		sgt[cur].tag+=delta;
@@ -47,9 +47,9 @@ void plus(int cur,int l,int r,LL delta){
 		if(sgt[cur].tag)
 			update(cur);
 		if(l<mid)
-			plus(le,l,r,delta);
+			modify(le,l,r,delta);
 		if(mid<r)
-			plus(ri,l,r,delta);
+			modify(ri,l,r,delta);
 		// sgt[cur].sum=sgt[cur].tag*(sgt[cur].ri-sgt[cur].le)+sgt[le].sum+sgt[ri].sum;
 		sgt[cur].sum=sgt[le].sum+sgt[ri].sum;
 	}
@@ -75,14 +75,14 @@ int main(){
 	scanf("%d %d",&n,&m);
 	for(int i=1;i<=n;i++)
 		scanf("%lld",&a[i]);
-	built(1,1,n+1);
+	build(1,1,n+1);
 	for(int i=1;i<=m;i++){
 		int cmd,le,ri;
 		scanf("%d",&cmd);
 		if(cmd==1){
 			LL k;
 			scanf("%d %d %lld",&le,&ri,&k);
-			plus(1,le,ri+1,k);
+			modify(1,le,ri+1,k);
 		}
 		else{
 			scanf("%d %d",&le,&ri);

@@ -26,7 +26,6 @@ void FFT(int n,Complex* P,int f){
 
     for(int i=2,l;i<=n;i<<=1){
         l=i>>1;
-        
         Complex wn={cos(2*PI/i),f*sin(2*PI/i)};
         for(int j=0;j<n;j+=i){
             Complex w={1,0};

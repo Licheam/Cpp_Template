@@ -60,6 +60,6 @@ int main(){
         A[i]=A[i]*B[i];
     FFT(lim,A,-1);
     for(int i=0;i<n+m+1;i++)
-        printf("%d ", (int)(A[i].real/lim+0.5));
+        printf("%ld ", lround(A[i].real/lim));
     return 0;
 }

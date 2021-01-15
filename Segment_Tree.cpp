@@ -46,7 +46,7 @@ struct SGT{
 		if(ql<=l && r<=qr) return sum[x];
 
 		if(tag[x]) pushdown(x,l,r);
-		int m=(l+r)>>1;		
+		int m=(l+r)>>1;
 		LL res=0;
 		if(ql<=m) res+=query(x<<1,l,m,ql,qr);
 		if(m<qr) res+=query(x<<1|1,m+1,r,ql,qr);

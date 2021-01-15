@@ -6,12 +6,8 @@ LL a,b,n;
 
 LL binpow(LL x,LL y,LL m){
 	LL r=1%m;
-	while(y){
-		if(y&1)
-			r=r*x%m;
-		x=x*x%m;
-		y>>=1;
-	}
+	for(;y;y>>=1,x=x*x%m)
+		if(y&1) r=r*x%m;
 	return r;
 }
 

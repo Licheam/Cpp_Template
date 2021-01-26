@@ -1,45 +1,50 @@
-#include <cstdio>
+#include <bits/stdc++.h>
+const int MAXN=2005;
 
-#define _for(i,a,b) for(int (i)=(a);(i)<=(b);(i)++)
-#define MAXN 1005
+struct BIT {
+	int n,m;
+	int a[MAXN][MAXN];
 
-int n,m,H,p,q,bit[MAXN][MAXN];
+	int lowbit(int x){
+		return x&(-x);
+	}
 
-int lowbit(int x){
-	return x&(-x);
-}
-
-void change(int x,int y,int k){
-	for(int i=x;i<=n;i+=lowbit(i)){
-		for(int j=y;j<=m;j+=lowbit(j)){
-			bit[i][j]+=k;
+	void change(int x,int y,int k){
+		for(int i=x;i<=n;i+=lowbit(i)){
+			for(int j=y;j<=m;j+=lowbit(j)){
+				a[i][j]+=k;
+			}
 		}
 	}
-}
 
-int sum(int x,int y){
-	int s=0;
-	for(int i=x;i>0;i-=lowbit(i)){
-		for(int j=y;j>0;j-=lowbit(j)){
-			s+=bit[i][j];
+	int sum(int x,int y){
+		int s=0;
+		for(int i=x;i>0;i-=lowbit(i)){
+			for(int j=y;j>0;j-=lowbit(j)){
+				s+=a[i][j];
+			}
 		}
+		return s;
 	}
-	return s;
-}
+}bit;
 
 int main(){
+	int n,m,H;
 	scanf("%d %d %d",&n, &m, &H);
-	_for(i,1,n+1)
-		_for(j,1,m+1)
-			bit[i][j]=0;
-	_for(i,1,H){
-		scanf("%d %d", &p, &q);
-		change(1,1,1);
-		change(p+1,1,-1);
-		change(1,q+1,-1);
-		change(p+1,q+1,1);//1-2+1
+	bit.n=n;
+	bit.m=m;
+	for(int i=1;i<=n;i++)
+		for(int j=1;j<=m;j++)
+			bit.a[i][j]=0;
+	for(int i=1;i<=H;i++) {
+		int x,y;
+		scanf("%d %d", &x, &y);
+		bit.change(1,1,1);
+		bit.change(x+1,1,-1);
+		bit.change(1,y+1,-1);
+		bit.change(x+1,y+1,1);//1-2+1
 	}
-	_for(i,1,n)
-		_for(j,1,m)
-			printf("%d\n", sum(i,j));
+	for(int i=1;i<=n;i++)
+		for(int j=1;j<=m;j++)
+			printf("%d\n", bit.sum(i,j));
 }
